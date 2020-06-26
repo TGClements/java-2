@@ -2,7 +2,6 @@ package burger_shop;
 
 import menu.*;
 
-//import menu.*;
 import java.util.ArrayList;
 
 public class Order {
