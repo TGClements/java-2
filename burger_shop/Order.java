@@ -1,85 +1,123 @@
 package burger_shop;
 
+import menu.*;
+
+//import menu.*;
 import java.util.ArrayList;
 
 public class Order {
-
-    private Toppings t = new Toppings();
-    private Sides sides = new Sides();
-    private Drinks drinks = new Drinks();
-
     private Burger burger;
     private Bread bread;
     private Meat meat;
-
     private Meal meal;
 
-    private ArrayList<Meal> mealList = new ArrayList<>();
-    private ArrayList<Burger> burgerList = new ArrayList<>();
-    private ArrayList<String> sidesList = new ArrayList<>();
-    private ArrayList<String> drinksList = new ArrayList<>();
+    ArrayList<Topping> toppingList = new ArrayList<>();
+    ArrayList<Side> sideList = new ArrayList<>();
+    ArrayList<Burger> burgerList = new ArrayList<>();
+    ArrayList<Drink> drinkList = new ArrayList<>();
+    ArrayList<Meal> mealList = new ArrayList<>();
 
-    public Order(Burger burger) {
+    public Order(Burger burger, Bread bread, Meat meat) {
         this.burger = burger;
-
-        burgerList.add(burger);
+        this.bread = bread;
+        this.meat = meat;
     }
 
     public Order(Meal meal) {
         this.meal = meal;
+    }
 
+    public void addToppings(Topping one, Topping two, Topping three, Topping four) {
+        toppingList.add(one);
+        toppingList.add(two);
+        toppingList.add(three);
+        toppingList.add(four);
+    }
+
+    public void addToppings(Topping one, Topping two, Topping three) {
+        toppingList.add(one);
+        toppingList.add(two);
+        toppingList.add(three);
+    }
+
+    public void addToppings(Topping one, Topping two) {
+        toppingList.add(one);
+        toppingList.add(two);
+    }
+
+    public void addToppings(Topping one) {
+        toppingList.add(one);
+    }
+
+    public void addSides(Side one, Side two, Side three, Side four) {
+        sideList.add(one);
+        sideList.add(two);
+        sideList.add(three);
+        sideList.add(four);
+    }
+
+    public void addSides(Side one, Side two, Side three) {
+        sideList.add(one);
+        sideList.add(two);
+        sideList.add(three);
+    }
+
+    public void addSides(Side one, Side two) {
+        sideList.add(one);
+        sideList.add(two);
+    }
+
+    public void addSides(Side one) {
+        sideList.add(one);
+    }
+
+    public void addBurger(Burger burgie) {
+        burgerList.add(burgie);
+    }
+
+    public void addDrink(Drink drink) {
+        drinkList.add(drink);
+    }
+
+    public void addMeal(Meal meal) {
         mealList.add(meal);
     }
 
-    // Add meal toppings
-    public void addToppings(Meal meal, int index) {
-        meal.addTopping(index);
-    }
-
-    // Add burger toppings
-    public void addToppings(Burger burger, int index) {
-        burger.addToppings(t, index);
-    }
-
-    public void addBurger(String burgerType) {
-
-        switch (burgerType) {
-
-            case "Deluxe Burger":
-                burgerList.add(
-                        new DeluxeBurger("Deluxe Burger", Burger.burgerPrice(), bread.getBread(0), meat.getMeat(0)));
-                break;
-            case "Health Burger":
-                burgerList.add(
-                        new HealthBurger("Health Burger", Burger.burgerPrice(), bread.getBread(0), meat.getMeat(0)));
-                break;
-            default:
-                burgerList.add(new Burger("Basic Burger", Burger.burgerPrice(), bread.getBread(0), meat.getMeat(0)));
-                break;
-        }
-    }
-
-    public void addSides(int index) {
-        sidesList.add(sides.getSide(index));
-    }
-
-    public void addDrink(int index) {
-        drinksList.add(drinks.getDrink(index));
-    }
-
     public double purchaseOrder() {
-        double total = 0.00;
+        double ordertotal = 0;
+
+        try {
+            ordertotal += meal.getPrice();
+        } catch (NullPointerException npe) {
+            // Ignore
+        }
+
+        try {
+            ordertotal += burger.totalBurgerPrice();
+        } catch (NullPointerException npe) {
+            // Ignore
+        }
 
         for (Burger b : burgerList) {
-            total += b.totalBurgerPrice();
+            ordertotal += b.totalBurgerPrice();
+        }
+
+        for (Topping t : toppingList) {
+            ordertotal += 0.50;
+        }
+
+        for (Side s : sideList) {
+            ordertotal += 1.00;
+        }
+
+        for (Drink d : drinkList) {
+            ordertotal += 0.25;
         }
 
         for (Meal m : mealList) {
-            total += m.totalMealPrice();
+            ordertotal += m.getPrice();
         }
 
-        System.out.println("The total is: " + total);
-
-        return total;
+        return ordertotal;
     }
 }

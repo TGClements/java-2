@@ -1,5 +1,7 @@
 package burger_shop;
 
+import menu.*;
+
 /*
 
 DID PAIR PROGRAMMING WITH:
@@ -14,41 +16,14 @@ public class Main {
     public static void main(String[] args) {
         //main execution of the burger shop goes here.  This is the "entry point" of your application
 
-        // Toppings t = new Toppings();
-        // Bread br = new Bread();
-        // Meat m = new Meat();
+        Order o1 = new Order(Meal.healthyMeal);
+        o1.addBurger(Burger.value);
+        o1.addSides(Side.applePie, Side.cheeseFries, Side.salad, Side.chips);
+        System.out.println(o1.purchaseOrder());
 
-        // Burger b = new Burger("Basic", Burger.plainBurgerPrice(), br.getBread(4), m.getMeat(3));
-        // b.addToppings(t, 0);
-        // b.addToppings(t, 0);
-
-        // System.out.println(b.toString());
-        // System.out.println(b.totalBurgerPrice());
-
-        // HealthBurger hb = new HealthBurger("Basic", 10.50, br.getBread(4), m.getMeat(3));
-        // hb.addToppings(t, 0);
-        // hb.addToppings(t, 0);
-
-        // System.out.println(hb.toString());
-
-        // DeluxeBurger db = new DeluxeBurger("Basic", 10.50, br.getBread(4), m.getMeat(3));
-        // db.addToppings(t, 0);
-        // db.addToppings(t, 15);
-        // db.addToppings(t, 0);
-        // db.addToppings(t, 2);
-        // db.addToppings(t, 3);
-        // db.addToppings(t, 4);
-        // db.addToppings(t, 5);
-        // db.addToppings(t, 6);
-        // System.out.println(db.toString());
-
-        Meal m1 = new Meal();
-        m1.newHealthyMeal();
-        m1.addTopping(1);
-        m1.changeDrink(0);
-        System.out.println(m1.getCurrentMeal());
-
-        Order o1 = new Order(m1);
-        o1.purchaseOrder();
+        Order o2 = new Order(DeluxeBurger.deluxe, Bread.brioche, Meat.steak);
+        o2.addDrink(Drink.orangeFanta);
+        o2.addSides(Side.applePie);
+        System.out.println(o2.purchaseOrder());
     }
 }
